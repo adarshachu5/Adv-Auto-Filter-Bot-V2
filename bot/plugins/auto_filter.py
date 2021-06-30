@@ -203,7 +203,7 @@ async def auto_filter(bot, update):
         try:
             await bot.send_message(
                 chat_id = update.chat.id,
-                text=f"Found {(len_results)} Results For Your Query: <code>{query}</code>",
+                text=f"താങ്കൾ ചോദിച്ച <code>{query}</code> എന്ന സിനിമയുടെ ഫയൽ ലഭിക്കുവാൻ താഴെ കാണുന്ന ലിങ്ക് ക്ലിക്ക് ചെയ്യുക👇☺️",
                 reply_markup=reply_markup,
                 parse_mode="html",
                 reply_to_message_id=update.message_id
