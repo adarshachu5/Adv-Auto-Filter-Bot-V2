@@ -142,7 +142,7 @@ async def cb_navg(bot, update: CallbackQuery):
     
     reply_markup = InlineKeyboardMarkup(temp_results)
     
-    text=f"<i>താങ്കൾ ചോദിച്ച</i> <code>{query}</code> <i>എന്ന സിനിമയുടെ ഫയൽ ലഭിക്കുവാൻ താഴെ കാണുന്ന ലിങ്ക് ക്ലിക്ക് ചെയ്യുക</i>"
+    text=f"താങ്കൾ ചോദിച്ച <code>{query}</code> എന്ന സിനിമയുടെ ഫയൽ ലഭിക്കുവാൻ താഴെ കാണുന്ന ലിങ്ക് ക്ലിക്ക് ചെയ്യുക"
         
     try:
         await update.message.edit(
