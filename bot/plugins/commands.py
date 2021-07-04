@@ -38,7 +38,7 @@ async def start(bot, update):
                         [
                             InlineKeyboardButton
                                 (
-                                    '❣️Our official Group❣️', url="https://t.me/filmkottakaa"
+                                    '<b>❣️OUR OFFICIAL GROUP❣️</b>', url="https://t.me/filmkottakaa"
                                 )
                         ]
                     ]
@@ -57,7 +57,7 @@ async def start(bot, update):
                         [
                             InlineKeyboardButton
                                 (
-                                    '❣️Our official group❣️', url="https://t.me/filmkottakaa"
+                                    '<b>❣️OUR OFFICIAL GROUP❣️</b>', url="https://t.me/filmkottakaa"
                                 )
                         ]
                     ]
