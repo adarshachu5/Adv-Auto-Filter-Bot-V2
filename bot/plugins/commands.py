@@ -38,7 +38,7 @@ async def start(bot, update):
                         [
                             InlineKeyboardButton
                                 (
-                                    '❣️Our Group❣️', url="https://t.me/filmkottakaa"
+                                    '❣️Our official Group❣️', url="https://t.me/filmkottakaa"
                                 )
                         ]
                     ]
@@ -57,7 +57,7 @@ async def start(bot, update):
                         [
                             InlineKeyboardButton
                                 (
-                                    '❣️Our group❣️', url="https://t.me/filmkottakaa"
+                                    '❣️Our official group❣️', url="https://t.me/filmkottakaa"
                                 )
                         ]
                     ]
@@ -76,7 +76,7 @@ async def start(bot, update):
                         [
                             InlineKeyboardButton
                                 (
-                                    '❣️Our group❣️', url="https://t.me/filmkottakaa"
+                                    '❣️Our official group❣️', url="https://t.me/filmkottakaa"
                                 )
                         ]
                     ]
@@ -91,8 +91,6 @@ async def start(bot, update):
     buttons = [[
         InlineKeyboardButton('Our Group', url='https://t.me/filmkottakaa'),
         InlineKeyboardButton('Source Code 🧾', url ='https://github.com/CrazyBotsz/Adv-Auto-Filter-Bot-V2')
-    ],[
-        InlineKeyboardButton('Support 🛠', url='https://t.me/CrazyBotszGrp')
     ],[
         InlineKeyboardButton('Help ⚙', callback_data="help")
     ]]
