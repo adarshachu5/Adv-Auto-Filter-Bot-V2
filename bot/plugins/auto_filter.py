@@ -1,4 +1,3 @@
-Filmkottaka:
 import re
 import logging
 import asyncio
