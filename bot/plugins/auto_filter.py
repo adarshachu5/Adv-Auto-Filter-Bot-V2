@@ -15,7 +15,7 @@ INVITE_LINK = {}
 ACTIVE_CHATS = {}
 db = Database()
 
-@Bot.on_message(filters.text & filters.group, group=0)
+@Bot.on_message(filters.text & filters.group & ~filters.bot, group=0)
 async def auto_filter(bot, update):
     """
     A Funtion To Handle Incoming Text And Reply With Appropriate Results
@@ -60,37 +60,30 @@ async def auto_filter(bot, update):
     filters = await db.get_filters(group_id, query)
     
     if filters:
-        #results.append(
-        #        [
-        #            InlineKeyboardButton("⭕️ ALL MOVIES CHANEL ⭕️", url="https://t.me/mlm_movie_2")
-        #        ]
-        #    ) 
         for filter in filters: # iterating through each files
             file_name = filter.get("file_name")
             file_type = filter.get("file_type")
             file_link = filter.get("file_link")
-            file_size = int(filter.get("file_size", ""))
-            file_size = round((file_size/1024),2) # from B to KB
-            size = ""
-            file_KB = ""
-            file_MB = ""
-            file_GB = ""
+            file_size = int(filter.get("file_size", "0"))
+            
+            # from B to MiB
             
             if file_size < 1024:
-                file_KB = f"[{str(round(file_size,2))} KB]"
-                size = file_KB
-            elif file_size < (1024*1024):
-                file_MB = f"[{str(round((file_size/1024),2))} MB]"
-                size = file_MB
-            else:
-                file_GB = f"[{str(round((file_size/(1024*1024)),2))} GB]"
-                size = file_GB
-                
-            file_name = size + " - ♻️ " + "📥 DOWNLOAD 📥"
+                file_size = f"[{file_size} B]"
+            elif file_size < (1024**2):
+                file_size = f"[{str(round(file_size/1024, 2))} KiB] "
+            elif file_size < (1024**3):
+                file_size = f"[{str(round(file_size/(1024**2), 2))} MiB] "
+            elif file_size < (1024**4):
+                file_size = f"[{str(round(file_size/(1024**3), 2))} GiB] "
             
-            print(file_name)
-            #file_size = str(file_size) + " KB" if file_size < 1024 elif file_size < 1024 else str(round(file_size/1024)) + " GiB"  #"📁 " + 
             
+            file_size = "" if file_size == ("[0 B]") else file_size
+            
+            # add emoji down below inside " " if you want..
+            button_text = f"{file_size}{file_name}"
+            
+
             if file_type == "video":
                 if allow_video: 
                     pass
@@ -126,25 +119,13 @@ async def auto_filter(bot, update):
                 bot_ = FIND.get("bot_details")
                 file_link = f"https://t.me/{bot_.username}?start={unique_id}"
             
-            
-            
             results.append(
                 [
-                    InlineKeyboardButton(file_name, url=file_link)
+                    InlineKeyboardButton(button_text, url=file_link)
                 ]
             )
-        #https://telegra.ph/file/f3ea3421859204e383b03.jpg
+        
     else:
-        Send_message=await bot.send_photo(
-                photo="https://telegra.ph/file/4d2895776ae5745c7ebb2.jpg",
-                chat_id = update.chat.id,
-                caption=f"Sorry Couldn't Find This Movie.Please Try Again Or Search On Our <b><a href='https://t.me/mlm_movie_2'>Channel</a></b>. \n\nഈ സിനിമയുടെ ഒറിജിനൽ പേര് ഗൂഗിളിൽ പോയി കണ്ടെത്തി അതുപോലെ ഇവിടെ കൊടുക്കുക 🥺",
-                parse_mode="html",
-                reply_to_message_id=update.message_id
-            )
-        await asyncio.sleep(15) # in seconds
-        await Send_message.delete()
-        #await bot.delete_messages(update.chat.id,update.message_id)
         return # return if no files found for that query
     
 
@@ -172,7 +153,7 @@ async def auto_filter(bot, update):
         
         # Just A Decaration
         result[0].append([
-            InlineKeyboardButton(f"⭕🎭 Page 1/{len_result if len_result < max_pages else max_pages} 🎭⭕", callback_data="ignore")
+            InlineKeyboardButton(f"🔰 Page 1/{len_result if len_result < max_pages else max_pages} 🔰", callback_data="ignore")
         ])
         
         
@@ -215,22 +196,14 @@ async def auto_filter(bot, update):
                 
             ibuttons = None # Free Up Memory...
             achatId = None
-        
-        ibuttonss = []
-        ibuttonss.append(
-                        [
-                            InlineKeyboardButton("⭕️ ALL MOVIES CHANEL ⭕️", url="https://t.me/mlm_movie_2")
-                        ]
-                    )
-        for x in ibuttonss:
-                result[0].insert(0, x) #Insert invite link buttons at first of page
-        
+            
+            
         reply_markup = InlineKeyboardMarkup(result[0])
 
         try:
             await bot.send_message(
                 chat_id = update.chat.id,
-                text=f"We Found <code><b><i>{(len_results)}</i></b></code> Results For Your Query: <code><b><i>{query}</i></b></code>, Requested By <b><code>{update.from_user.first_name}</code></b>",
+                text=f"Found {(len_results)} Results For Your Query: <code>{query}</code>",
                 reply_markup=reply_markup,
                 parse_mode="html",
                 reply_to_message_id=update.message_id
