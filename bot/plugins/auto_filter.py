@@ -111,7 +111,6 @@ async def auto_filter(bot, update):
                     try:
                         bot_= await bot.get_me()
                         FIND["bot_details"] = bot_
-
 except FloodWait as e:
                         asyncio.sleep(e.x)
                         bot_= await bot.get_me()
@@ -224,7 +223,6 @@ async def gen_invite_links(db, group_id, bot, update):
     """
     chats = db.get("chat_ids")
     global INVITE_LINK
-
 if INVITE_LINK.get(str(group_id)):
         return
     
