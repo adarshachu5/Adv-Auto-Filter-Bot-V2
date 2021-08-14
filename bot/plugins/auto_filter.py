@@ -111,7 +111,7 @@ async def auto_filter(bot, update):
                     try:
                         bot_= await bot.get_me()
                         FIND["bot_details"] = bot_
-except FloodWait as e:
+                    except FloodWait as e:
                         asyncio.sleep(e.x)
                         bot_= await bot.get_me()
                         FIND["bot_details"] = bot_
@@ -203,7 +203,7 @@ except FloodWait as e:
         try:
             await bot.send_message(
                 chat_id = update.chat.id,
-                text=f"താങ്കൾ ചോദിച്ച <code>{query}</code> എന്ന സിനിമയുടെ ഫയൽ ലഭിക്കുവാൻ താഴെ കാണുന്ന ലിങ്ക് ക്ലിക്ക് ചെയ്യുക👇☺️",
+                text=f"Found {(len_results)} Results For Your Query: <code>{query}</code>",
                 reply_markup=reply_markup,
                 parse_mode="html",
                 reply_to_message_id=update.message_id
@@ -223,7 +223,8 @@ async def gen_invite_links(db, group_id, bot, update):
     """
     chats = db.get("chat_ids")
     global INVITE_LINK
-if INVITE_LINK.get(str(group_id)):
+    
+    if INVITE_LINK.get(str(group_id)):
         return
     
     Links = []
@@ -283,4 +284,5 @@ async def recacher(group_id, ReCacheInvite=True, ReCacheActive=False, bot=Bot, u
                 achatId.append(int(x["chat_id"]))
             
             ACTIVE_CHATS[str(group_id)] = achatId
-    return
+    return 
+
